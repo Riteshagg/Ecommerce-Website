@@ -1,0 +1,44 @@
+ {% extends 'blog/main.html' %}
+ {% block title %} Product {% endblock %}
+ {% block css %}
+ 
+ <style>
+ .inline-panel{
+     display: inline-block;
+     width:200px;
+     text-align: center;
+     margin-left: 50px;
+ }
+ img{
+        width:100%;
+        height: 100px;
+ }
+ </style>
+ 
+ {% endblock %}
+ {% block body %} 
+ 
+ <div class="container">
+    <h1>Product List</h1>
+<hr>
+        {% for list in products %}
+
+
+        <div class="panel panel-default inline-panel">
+            <div class="panel-body">
+                <img src = '/media/{{list.image}}'>
+                <h4>{{list.name}}</h4>
+                <p>{{list.description}}</p>
+                <h5>{{list.price}}</h5>
+                <p>{{list.category}}</p>
+
+            </div>
+            <div class="panel-footer"><button type="button" class="btn btn-primary btn-sm">Add to Cart</button></div>
+          </div>
+
+
+
+                     
+        {% endfor %}
+ </div>
+ {% endblock %}
