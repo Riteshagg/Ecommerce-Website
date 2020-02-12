@@ -18,22 +18,33 @@
  {% endblock %}
  {% block body %} 
  
+ 
  <div class="container">
+
+    {% for message in messages %}
+    <div class="alert alert-{{message.tag}} alert-dismissible fade show" role="alert">
+        <strong>Note: </strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+
     <h1>Product List</h1>
 <hr>
+
         {% for list in products %}
 
 
         <div class="panel panel-default inline-panel">
             <div class="panel-body">
                 <img src = '/media/{{list.image}}'>
-                <h4>{{list.name}}</h4>
+                <h4>P{{list.name}}</h4>
+                <h5>Price : {{list.price}}</h5>                    
                 <p>{{list.description}}</p>
-                <h5>{{list.price}}</h5>
-                <p>{{list.category}}</p>
 
             </div>
-            <div class="panel-footer"><button type="button" class="btn btn-primary btn-sm">Add to Cart</button></div>
+            <div class="panel-footer"><button type="button" class="btn btn-primary btn-sm">View Detail</button></div>
           </div>
 
 

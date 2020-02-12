@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'firstpy.wsgi.application'
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
-'NAME': 'ignouhackathon2020',
+'NAME': 'buyers',
 'USER': 'root',
 'PASSWORD': '',
 'HOST': 'localhost',

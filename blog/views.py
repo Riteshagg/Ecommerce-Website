@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Product
@@ -17,17 +18,6 @@ def index(request):
     return render(request,'blog/index.html',{'form':model})
   
 
-
-def update(request):
-        updated = Product.objects.get(id=1)
-        if request.method=="POST":
-                form = List(request.POST,request.FILES, instance=updated)
-                if form.is_valid():
-                        form.save()
-                        return redirect(index)
-        else:
-                form = List(instance=updated)
-        return render(request,'blog/index.html',{'update':form}) 
     
 
 
@@ -55,3 +45,24 @@ def signup(request):
         else:
                 print("not Posted")      
         return render(request,"blog/signup.html")
+
+
+
+def handlelogin(request):
+        if request.method == "POST":
+                loginusername = request.POST['username']
+                loginpassword = request.POST['pass']
+                user = authenticate(username=loginusername, password=loginpassword)
+                if user is not None:
+                        login(request,user)
+                        messages.success(request,"Login successfully")  
+                        return redirect(product)
+                else:
+                        messages.error(request,"invalid login username and password")    
+                        return redirect(index)    
+        return render(request,"blog/login.html")
+
+def handlelogout(request):
+        logout(request)
+        messages.success(request,"Logout successfully") 
+        return redirect(index)       
