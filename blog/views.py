@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Product
 from .forms import List
 # Create your views here.
@@ -20,7 +21,7 @@ def index(request):
 
     
 
-
+@login_required(login_url='login')
 def product(request):
      pro = Product.objects.all()
      params  = {'products':pro}
@@ -62,6 +63,9 @@ def handlelogin(request):
                         return redirect(index)    
         return render(request,"blog/login.html")
 
+
+
+@login_required(login_url='login')
 def handlelogout(request):
         logout(request)
         messages.success(request,"Logout successfully") 
