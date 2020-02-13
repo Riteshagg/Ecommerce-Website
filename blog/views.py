@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Product,ProQuantity
+from .models import Product,ProQuantity,Transaction
 from .forms import List,Quentity
 # Create your views here.
 
@@ -72,11 +72,24 @@ def handlelogout(request):
         return redirect(index)    
 
 
+@login_required(login_url='login')
+def order(request):
+        items = Transaction.objects.filter(userId=request.user.id)
+        products = []
+        for item in items:
+            products += Product.objects.filter(id=item.productid)
+        param  = {'model':products}
+        return render(request,'blog/order.html',param)
+
+
+
+
+
 
 @login_required(login_url='login')
 def viewitems(request,itemid):
         items = Product.objects.get(id=itemid)
-        model = ProQuantity.objects.all() 
+        model = ProQuantity.objects.all()  
         params  = {'item':items,'model':model}
         return render(request,'blog/product_items.html',params)
 
@@ -84,11 +97,28 @@ def viewitems(request,itemid):
 
 @login_required(login_url='login')
 def buycate(request):
+        
         if request.method=="POST":
-            model= Quentity(request.POST)  
-            if model.is_valid():
-                    model.save()
-            return redirect(product)
+                if 'buynow' in request.POST:
+
+                        product_id = request.POST['id']
+                        quantity = request.POST['quantityID']
+                        cart_item = Transaction.objects.create(userId=request.user.id, productid=product_id,quantityid=quantity,status="active")
+                        messages.success(request,"Transaction has been done successfully") 
+                        return redirect(viewitems,request.user.id)
+
+                elif 'addtocart' in  request.POST:
+                        return HttpResponse('add to cart')
+                else:
+                        return HttpResponse('add to Wish List')               
         else:
-           model = Quentity.objects.all() 
-        return render(request,'blog/product_items.html',{'form':model})       
+                 model = ProQuantity.objects.all()  
+        return render(request,'blog/index.html',{'model':model,})
+
+
+def buyagain(request,itemsid):
+        return HttpResponse('buyagain')        
+                
+
+
+                  

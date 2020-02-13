@@ -58,14 +58,14 @@ class Product(models.Model):
 
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True)
-    quantityid = models.ForeignKey(ProQuantity,on_delete=models.CASCADE)
-    farmerId = models.ForeignKey(Farmer,on_delete=models.CASCADE)
-    productid = models.ForeignKey(Product,on_delete=models.CASCADE)
+    quantityid = models.IntegerField()
+    userId = models.IntegerField()
+    productid = models.IntegerField()
     status = models.CharField(max_length=50)
     class Meta: 
         indexes = [
             models.Index(fields=['quantityid'], name='quantity_id1'),
-            models.Index(fields=['farmerId'], name='farmerId2'),
+            models.Index(fields=['userId'], name='userId1'),
             models.Index(fields=['productid'], name='product_id1'),
             models.Index(fields=['status'], name='status'),
 

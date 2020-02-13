@@ -24,6 +24,14 @@
 </style>
 {% endblock %}
 {% block body %} 
+{% for message in messages %}
+<div class="alert alert-{{message.tag}} alert-dismissible fade show" role="alert">
+    <strong>Note: </strong> {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endfor %}
 <div class="product-container">
     <div class="row">
       <div class="col-3">
@@ -39,13 +47,14 @@
                 <h6><i class="fas fa-rupee-sign"></i> {{item.price}}</h5> 
 
                     
-                    <form action="{% url 'buycate' %}" method="POST">
+                    <form action="/blog/buycate" method="POST">
                       {% csrf_token %}
+                      <input type="hidden" id="id" name="id" value="{{item.id}}">
                       <div class="form-group">
                         <label for="sel1">Quantity:</label>
-                        <select class="form-control" id="sel1">
+                        <select class="form-control" id="sel1" name="quantityID">
                             {% for list in model %}
-                            <option value="{{list.id}}">{{list.quantity_total}}</option>
+                            <option value="{{list.id}}">{{list.quantity_total}}KG</option>
                       {% endfor %}
                         </select>
                       </div>
@@ -56,7 +65,7 @@
                 
                     </form>
                  
-            </form>
+            
             </div>  
             </div>
          
