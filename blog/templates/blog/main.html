@@ -23,31 +23,31 @@
                 
                 {% if user.is_authenticated %}               
                  <li class="nav-item">
-                  <a class="nav-link" href="product">All Products</a>
+                  <a class="nav-link" href="{% url 'product' %}">All Products</a>
                 </li>
                 <li class="nav-item">
                   
                     <div class="dropdown">
                       <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Your Order</a>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" href="order">Order</a>
-                      <a class="dropdown-item" href="buyagain">buy again</a>
-                      <a class="dropdown-item" href="cancel">Cancelled order</a>
+                      <a class="dropdown-item" href="{% url 'order' %}">Order</a>
+                      <a class="dropdown-item" href="{% url 'buyagain' %}">buy again</a>
+                      <a class="dropdown-item" href="{% url 'cancel' %}">Cancelled order</a>
                     </div>
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="wishlist">Your Wish List</a>
+                  <a class="nav-link" href="{% url 'wishlist' %}">Your Wish List</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="chart"><i class="fas fa-cart-plus"></i></a>
+                  <a class="nav-link" href="{% url 'chart' %}"><i class="fas fa-cart-plus"></i></a>
                 </li>
             
                 <li class="nav-item">    
                   <div class="dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{request.user}}</a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="logout">Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                   </div>
                 </div>           
                  

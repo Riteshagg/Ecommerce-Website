@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Product
-from .forms import List
+from .models import Product,ProQuantity
+from .forms import List,Quentity
 # Create your views here.
 
 def index(request):
@@ -69,4 +69,26 @@ def handlelogin(request):
 def handlelogout(request):
         logout(request)
         messages.success(request,"Logout successfully") 
-        return redirect(index)       
+        return redirect(index)    
+
+
+
+@login_required(login_url='login')
+def viewitems(request,itemid):
+        items = Product.objects.get(id=itemid)
+        model = ProQuantity.objects.all() 
+        params  = {'item':items,'model':model}
+        return render(request,'blog/product_items.html',params)
+
+
+
+@login_required(login_url='login')
+def buycate(request):
+        if request.method=="POST":
+            model= Quentity(request.POST)  
+            if model.is_valid():
+                    model.save()
+            return redirect(product)
+        else:
+           model = Quentity.objects.all() 
+        return render(request,'blog/product_items.html',{'form':model})       
