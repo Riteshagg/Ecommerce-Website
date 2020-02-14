@@ -24,6 +24,10 @@
        width:50%;
        height: 150px;
 }
+.btns{
+  width:100%;
+  margin-top:10px;
+}
 </style>
 
 {% endblock %}
@@ -41,30 +45,32 @@
      </div>
    {% endfor %}
 <br/><br/>
+      <div class="product-container">
        
        {% for list in model %}
-
-       <div class="product-container">
-     <div class="row">
+<div class="row">
+       
        <div class="col-3">
          <a  href="viewitems/{{list.id}}"> 
            <img src = '/media/{{list.image}}' class="product-img">
          </a>   
          </div>
-             <div class="col-8 content">
+             <div class="col-7 content">
                <h5>{{list.name}}</h4>
                <h6><i class="fas fa-rupee-sign"></i> {{list.price}}</h5> 
-               </div> 
-               <div class="col-1">             
-               <a class="btn btn-primary" href="buyagain/{{list.id}}">Buy Again</a>
-             </div>  
-             </div>
+          </div>    
+            <div class="col-2">
+              <a class="btn btn-primary btns" href="buyagain/{{list.id}}">Buy Again</a>
+              <a class="btn btn-danger btns" href="cancel/{{list.id}}">Cancel</a>
+            </div>
+            </div>
           
-
-
-           </div>
-                    
        {% endfor %}
+        
+        
+        
+        
+        </div>
     
 </div>
 {% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'blog/main.html' %}
+{% block title %} Product {% endblock %}
+{% block css %}
+
+<style>
+    .inline-panel {
+        display: inline-block;
+        width: 200px;
+        text-align: center;
+        margin-left: 50px;
+    }
+
+    .product-container {
+       
+        border-bottom: 1px solid lightgray;
+    }
+
+    .content h6 {
+        color: chocolate;
+    }
+
+
+    .product-img {
+        width: 50%;
+        height: 150px;
+    }
+
+    .btns {
+        width: 100%;
+        margin-top: 10px;
+    }
+</style>
+
+{% endblock %}
+{% block body %}
+
+
+<div class="container">
+
+    {% for message in messages %}
+    <div class="alert alert-{{message.tag}} alert-dismissible fade show" role="alert">
+        <strong>Note: </strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    <br /><br />
+<div class="row">
+    <div class="col-9">
+        
+    {% for list in model %}
+
+   
+        
+            
+                <div class="row product-container ">
+            <div class="col-3">
+                <a href="viewitems/{{list.id}}">
+                    <img src='/media/{{list.image}}' class="product-img">
+                </a>
+            </div>
+            <div class="col-9 content">
+                <h5>{{list.name}}</h4>
+                    <h6><i class="fas fa-rupee-sign"></i> {{list.price}}
+                </h5>
+            </div>
+            </div>
+       
+       
+        
+ 
+
+    {% endfor %}
+    </div>
+    <div class="col-3">
+        <div class="row">
+            <div class="col-12">
+                <p>Subtotal ( {{itemCount}} item ) : <i class="fas fa-rupee-sign"></i> {{totalPrice}}</p>
+                <a class="btn btn-primary btns" href="buyagain/{{list.id}}">Proceed to Buy</a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+{% endblock %}

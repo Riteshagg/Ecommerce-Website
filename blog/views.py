@@ -74,9 +74,9 @@ def handlelogout(request):
 
 @login_required(login_url='login')
 def order(request):
-        items = Transaction.objects.filter(userId=request.user.id)
+        items = Transaction.objects.filter(userId=request.user.id,status="buy")
         products = []
-        for item in items:
+        for item in items:    
             products += Product.objects.filter(id=item.productid)
         param  = {'model':products}
         return render(request,'blog/order.html',param)
@@ -99,25 +99,57 @@ def viewitems(request,itemid):
 def buycate(request):
         
         if request.method=="POST":
-                if 'buynow' in request.POST:
-
-                        product_id = request.POST['id']
-                        quantity = request.POST['quantityID']
-                        cart_item = Transaction.objects.create(userId=request.user.id, productid=product_id,quantityid=quantity,status="active")
+                product_id = request.POST['id']
+                quantity = request.POST['quantityID']
+                if 'buynow' in request.POST:                      
+                        cart_item = Transaction.objects.create(userId=request.user.id, productid=product_id,quantityid=quantity,status="Buy")
                         messages.success(request,"Transaction has been done successfully") 
                         return redirect(viewitems,request.user.id)
 
                 elif 'addtocart' in  request.POST:
-                        return HttpResponse('add to cart')
+                        cart_item = Transaction.objects.create(userId=request.user.id, productid=product_id,quantityid=quantity,status="AddToCart")
+                        messages.success(request,"Your item  has been add to cart successfully") 
+                        return redirect(cart)
                 else:
-                        return HttpResponse('add to Wish List')               
+                        cart_item = Transaction.objects.create(userId=request.user.id, productid=product_id,quantityid=quantity,status="AddToWishList")
+                        messages.success(request,"Your item  has been add to wish list successfully") 
+                        return redirect(wishlist)
         else:
                  model = ProQuantity.objects.all()  
         return render(request,'blog/index.html',{'model':model,})
 
 
+def wishlist(request):
+        items = Transaction.objects.filter(userId=request.user.id,status="AddToWishList")
+        products = []
+        for item in items:
+            products += Product.objects.filter(id=item.productid)
+        param = {'model': products}
+        return render(request, 'blog/whishlist.html', param)
+
+
+
+
+def cart(request):
+        items = Transaction.objects.filter(userId=request.user.id,status="AddToCart")
+        itemsCount = Transaction.objects.filter(userId=request.user.id, status="AddToCart").count()
+        totalPrice = 0
+        products = []
+        for item in items:
+            query = Product.objects.filter(id=item.productid)
+            products += query
+            for total in query:
+                    totalPrice += total.price
+
+        param = {'model': products, 'itemCount': itemsCount,'totalPrice':totalPrice}
+        return render(request, 'blog/cart.html', param)
+
+
 def buyagain(request,itemsid):
-        return HttpResponse('buyagain')        
+        cart_update = Transaction.objects.filter(pk=some_value).update(field1='some value')
+        cart_item = Transaction.objects.create(userId=request.user.id, productid=itemsid,quantityid=quantity,status="Buy")
+        messages.success(request,"Transaction has been done successfully") 
+        return redirect(viewitems,request.user.id)        
                 
 
 
