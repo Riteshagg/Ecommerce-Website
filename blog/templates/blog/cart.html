@@ -56,18 +56,18 @@
             
                 <div class="row product-container ">
             <div class="col-3">
-                <a href="viewitems/{{list.id}}">
-                    <img src='/media/{{list.image}}' class="product-img">
+                <a href="viewitems/{{list.productid.id}}">
+                    <img src='/media/{{list.productid.image}}' class="product-img">
                 </a>
             </div>
             <div class="col-9 content">
-                <h5>{{list.name}}</h4>
-                    <h6><i class="fas fa-rupee-sign"></i> {{list.price}}
+                <h5>{{list.productid.name}}</h4>
+                    <h6><i class="fas fa-rupee-sign"></i> {{list.productid.price}}
                 </h5>
             </div>
             </div>
        
-       
+    {{list.id}}
         
  
 
@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-12">
                 <p>Subtotal ( {{itemCount}} item ) : <i class="fas fa-rupee-sign"></i> {{totalPrice}}</p>
-                <a class="btn btn-primary btns" href="buyagain/{{list.id}}">Proceed to Buy</a>
+                <a class="btn btn-primary btns" href="buyagain">Proceed to Buy</a>
             </div>
         </div>
     </div>

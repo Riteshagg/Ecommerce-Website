@@ -51,13 +51,16 @@
 <div class="row">
        
        <div class="col-3">
-         <a  href="viewitems/{{list.id}}"> 
-           <img src = '/media/{{list.image}}' class="product-img">
+         <a  href="viewitems/{{list.productid.id}}"> 
+           <img src = '/media/{{list.productid.image}}' class="product-img">
          </a>   
          </div>
+         <script>
+           console.log('{{list}}');
+         </script>
              <div class="col-7 content">
-               <h5>{{list.name}}</h4>
-               <h6><i class="fas fa-rupee-sign"></i> {{list.price}}</h5> 
+               <h5>{{list.productid.name}}</h4>
+               <h6><i class="fas fa-rupee-sign"></i> {{list.productid.price}}</h5> 
           </div>    
             <div class="col-2">
               <a class="btn btn-primary btns" href="buyagain/{{list.id}}">Buy Again</a>

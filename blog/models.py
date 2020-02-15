@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django import forms
 
 class Farmer(models.Model):
@@ -6,24 +7,18 @@ class Farmer(models.Model):
     Fname = models.CharField(max_length=233)
     state = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
-    class Meta: 
-        indexes = [
-            models.Index(fields=['Fname'], name='Farmer1'),
-            models.Index(fields=['state'], name='state1'),
-            models.Index(fields=['country'], name='country1'),
 
-        ]
+    def __int__(self):
+        return self.id
+     
 
 class ProQuantity(models.Model):
     id = models.AutoField(primary_key=True)
     quantity_total = models.CharField(max_length=80)
     farmerId = models.ForeignKey(Farmer,on_delete=models.CASCADE)
-    class Meta:
-        indexes = [
-            models.Index(fields=['quantity_total'], name='quantity_total1'),
-            models.Index(fields=['farmerId'], name='farmerId1'),
 
-        ]
+    def __int__(self):
+        return self.id
     
 
 class Product(models.Model):
@@ -35,20 +30,10 @@ class Product(models.Model):
     farmer_id = models.ForeignKey(Farmer,on_delete=models.CASCADE)
     quantity = models.CharField(max_length=55)
     productCate_id = models.IntegerField()
-    class Meta: 
-         indexes = [
-            models.Index(fields=['name'], name='name1'),
-            models.Index(fields=['description'], name='description1'),
-            models.Index(fields=['price'], name='price1'),
-            models.Index(fields=['image'], name='image1'),
-            models.Index(fields=['farmer_id'], name='farmer_id1'),
-            models.Index(fields=['productCate_id'], name='productCate_id1'),
-            models.Index(fields=['quantity'], name='quantity1'),
 
-        ]
-
-    def __str__(self):
-        return self.quantity   
+    def __int__(self):
+        return self.id
+           
 
 
 
@@ -58,17 +43,12 @@ class Product(models.Model):
 
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True)
-    quantityid = models.IntegerField()
-    userId = models.IntegerField()
-    productid = models.IntegerField()
+    quantityid = models.ForeignKey(ProQuantity, on_delete=models.CASCADE)
+    userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    productid = models.ForeignKey(Product, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
-    class Meta: 
-        indexes = [
-            models.Index(fields=['quantityid'], name='quantity_id1'),
-            models.Index(fields=['userId'], name='userId1'),
-            models.Index(fields=['productid'], name='product_id1'),
-            models.Index(fields=['status'], name='status'),
 
-        ]
+    def __int__(self):
+        return self.id
 
     
