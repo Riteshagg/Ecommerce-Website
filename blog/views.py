@@ -137,12 +137,24 @@ def cart(request):
         return render(request, 'blog/cart.html', param)
 
 
-def buyagain(request,itemsid):
-        cart_update = Transaction.objects.filter(pk=some_value).update(field1='some value')
-        cart_item = Transaction.objects.create(userId=request.user.id, productid=itemsid,quantityid=quantity,status="Buy")
-        messages.success(request,"Transaction has been done successfully") 
-        return redirect(viewitems,request.user.id)        
+def cartparam(request,itemsid):
+        productsCancel=Transaction.objects.filter(id=itemsid).update(status="AddToCart")
+        messages.success(request, "Your item  has been add to cart successfully")
+        return redirect(cart)
+
+
+
+def cancel(request, itemsid):
+
+        cancelorder = Transaction.objects.filter(id=itemsid).update(status="Cancel")
+        messages.success(request,"Your item  has been cancel successfully") 
+        return redirect(order)
                 
+
+def canceltotal(request):
+        productsCancel=Transaction.objects.filter(userId=request.user.id, status="Cancel").select_related()
+        param = {'model': productsCancel}
+        return render(request, 'blog/canceltotal.html', param)
 
 
                   
