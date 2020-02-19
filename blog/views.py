@@ -124,11 +124,17 @@ def wishlist(request):
         return render(request, 'blog/whishlist.html', param)
 
 
+def delete(request,itemsid):
+        productsdelete=Transaction.objects.filter(id=itemsid).update(status="delete")
+        messages.success(request, "Your item  has been delete successfully")
+        return redirect(wishlist)
 
+     
 
 def cart(request):
         products = Transaction.objects.filter(userId=request.user.id,status="AddToCart").select_related()
         itemsCount = Transaction.objects.filter(userId=request.user.id, status="AddToCart").count()
+        request.session['countitems'] = itemsCount
         totalPrice = 0
         for item in products:
                 totalPrice += item.productid.price

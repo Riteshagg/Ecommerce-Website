@@ -7,7 +7,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <title>{% block title %} {% endblock %}</title>
         
-        {% block css %} {% endblock %}
+        {% block css %}        
+        {% endblock %}
+        <style>
+          .cartTotal{
+              padding: 5px 10px 5px 10px;
+              background-color: orange;
+              border-radius: 50px;
+              color: white;
+              margin-left: 10px;
+              font-size: 13px;
+          }
+        </style>
        
     </head>
     <body>
@@ -39,7 +50,7 @@
                   <a class="nav-link" href="{% url 'wishlist' %}">Your Wish List</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'cart' %}"><i class="fas fa-cart-plus"></i></a>
+                  <a class="nav-link" href="{% url 'cart' %}"><p><i class="fas fa-cart-plus"></i><span class="cartTotal">{{request.session.countitems}}</span></p></a>
                 </li>
             
                 <li class="nav-item">    
