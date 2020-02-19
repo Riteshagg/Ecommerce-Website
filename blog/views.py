@@ -118,19 +118,21 @@ def buycate(request):
         return render(request,'blog/index.html',{'model':model,})
 
 
+@login_required(login_url='login')
 def wishlist(request):
         products=Transaction.objects.filter(userId=request.user.id, status="AddToWishList").select_related()
         param = {'model': products}
         return render(request, 'blog/whishlist.html', param)
 
 
+@login_required(login_url='login')
 def delete(request,itemsid):
         productsdelete=Transaction.objects.filter(id=itemsid).update(status="delete")
         messages.success(request, "Your item  has been delete successfully")
         return redirect(wishlist)
 
      
-
+@login_required(login_url='login')
 def cart(request):
         products = Transaction.objects.filter(userId=request.user.id,status="AddToCart").select_related()
         itemsCount = Transaction.objects.filter(userId=request.user.id, status="AddToCart").count()
@@ -143,13 +145,14 @@ def cart(request):
         return render(request, 'blog/cart.html', param)
 
 
+@login_required(login_url='login')
 def cartparam(request,itemsid):
         productsCancel=Transaction.objects.filter(id=itemsid).update(status="AddToCart")
         messages.success(request, "Your item  has been add to cart successfully")
         return redirect(cart)
 
 
-
+@login_required(login_url='login')
 def cancel(request, itemsid):
 
         cancelorder = Transaction.objects.filter(id=itemsid).update(status="Cancel")
@@ -157,6 +160,7 @@ def cancel(request, itemsid):
         return redirect(order)
                 
 
+@login_required(login_url='login')
 def canceltotal(request):
         productsCancel=Transaction.objects.filter(userId=request.user.id, status="Cancel").select_related()
         param = {'model': productsCancel}
