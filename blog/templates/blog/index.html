@@ -18,7 +18,17 @@
       {% if form %}
       <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form|crispy}}
+        {{form.name|as_crispy_field}}
+        {{form.image|as_crispy_field}}
+        
+        {% autoescape off %}
+        {{form.description|safe}}
+        {% endautoescape %}
+        {{form.price|as_crispy_field}}
+        {{form.quantity|as_crispy_field}}
+        {{form.farmer_id|as_crispy_field}}
+        {{form.productCate_id|as_crispy_field}}
+        <!-- {{form|crispy}} -->
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

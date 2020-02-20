@@ -18,49 +18,70 @@
               margin-left: 10px;
               font-size: 13px;
           }
+         .order-list{
+           position: relative;
+         }
+          .order-list:hover>.order-group{
+              display: block;
+          }
+          .order-list>.order-group{
+    top: 0;
+    left: 100%;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+    }
+    nav .menu-items {
+      margin-left: 580px;
+    }
+     .dropdown ul li a{
+      display: block;
+      text-decoration: none;
+      color:black
+     }
+     #menu-icon{
+       margin-left: 20px;
+     }
         </style>
        
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
             <a class="navbar-brand" href="#">Buyers Dashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
           
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-              
-                
-                {% if user.is_authenticated %}               
-                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'product' %}">All Products</a>
-                </li>
-                <li class="nav-item">
-                  
-                    <div class="dropdown">
-                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Your Order</a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{% url 'order' %}">Order</a>
-                      <a class="dropdown-item" href="{% url 'canceltotal' %}">Cancelled order</a>
-                    </div>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'wishlist' %}">Your Wish List</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'cart' %}"><p><i class="fas fa-cart-plus"></i><span class="cartTotal">{{request.session.countitems}}</span></p></a>
-                </li>
             
+              <ul class="navbar-nav mr-auto menu-items">
+                {% if user.is_authenticated %}   
+               
+               
                 <li class="nav-item">    
                   <div class="dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{request.user}}</a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
-                  </div>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Hello, {{request.user}}</a>
+                  <ul class="dropdown-menu" role="menu">
+                  <li class="dropdown-item" >  <a href="{% url 'product' %}">All Products</a></li>
+                  <li class="dropdown-item order-list" >  <a href="#" >Your Order <i class="fas fa-caret-right" id="menu-icon"></i></a>
+                    <ul class="dropdown-menu order-group">
+                      <li class="dropdown-item"><a href="{% url 'order' %}">Order</a></li>
+                      <li class="dropdown-item"><a href="{% url 'canceltotal' %}">Cancelled order</a></li>
+                  </ul>
+                </li>
+                
+                  <li class="dropdown-item" ><a  href="{% url 'wishlist' %}">Your Wish List</a></li>
+                  <li class="dropdown-divider"></li>
+                    <li class="dropdown-item" ><a  href="{% url 'logout' %}">Logout</a></li>
+                </ul>
                 </div>           
                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'cart' %}">
+                    <p><i class="fas fa-cart-plus"></i><span class="cartTotal">{{request.session.countitems}}</span></p>
+                  </a>
                 </li>
              
                 {% else %}
@@ -76,6 +97,8 @@
                 {% endif %}
                 
               </ul>
+            </div>
+            </div>
             </div>
           </nav>
           {% block body %} {% endblock %}
