@@ -47,6 +47,8 @@ class Transaction(models.Model):
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     productid = models.ForeignKey(Product, on_delete=models.CASCADE)
     status = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __int__(self):
         return self.id

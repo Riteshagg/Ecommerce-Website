@@ -46,7 +46,8 @@
    {% endfor %}
 <br/><br/>
       <div class="product-container">
-       
+      <h3>Your Order</h3>
+      <hr>
        {% for list in model %}
 <div class="row">
        
@@ -55,9 +56,6 @@
            <img src = '/media/{{list.productid.image}}' class="product-img">
          </a>   
          </div>
-         <script>
-           console.log('{{list}}');
-         </script>
              <div class="col-7 content">
                <h5>{{list.productid.name}}</h4>
                <h6><i class="fas fa-rupee-sign"></i> {{list.productid.price}}</h5> 

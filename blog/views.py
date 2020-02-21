@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Product,ProQuantity,Transaction
 from .forms import List,Quentity
+from datetime import date
 # Create your views here.
 
 def index(request):
@@ -167,4 +168,10 @@ def canceltotal(request):
         return render(request, 'blog/canceltotal.html', param)
 
 
-                  
+@login_required(login_url='login')
+def processtobuy(request):
+        products = Transaction.objects.filter(userId=request.user.id,status="AddToCart").count()
+        for x in range(products):
+                products = Transaction.objects.filter(userId=request.user.id,status="AddToCart").update(status="Buy")      
+        messages.success(request, "Your item  has been order successfully")                  
+        return redirect(order)
