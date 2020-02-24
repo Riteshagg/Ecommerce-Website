@@ -1,7 +1,31 @@
 {% extends 'blog/main.html' %}
 {% load crispy_forms_tags %}
 {% block title %} Add Product {% endblock %}
-{% block css %} {% endblock %}
+{% block css %}
+<style>
+   #textEditor{
+            width: 100%;
+            height: 400px;
+            overflow: scroll;
+            border:1px solid lightgray;
+            padding:20px;
+        }
+        #data{
+            width: 100%;
+            height: 400px;
+             overflow: scroll;
+        }
+        .editor{
+            margin-top: 200px
+        }
+         #id_description{
+            width: 100%;
+            height: 400px;
+             overflow: scroll;
+        }
+</style>
+
+{% endblock %}
 {% block body %}
 <div class="container">
   {% for message in messages %}
@@ -14,16 +38,33 @@
 {% endfor %}
   <div class="row">
     <div class="col-md-6">   
-      
-      {% if form %}
       <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.name|as_crispy_field}}
         {{form.image|as_crispy_field}}
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-light btn-sm" id="jBold"><b>B</b></a>
+        <a class="btn btn-light btn-sm" id="italic"><b>I</b></a>
+        <a class="btn btn-light btn-sm" id="br"><b>New Line</b></a>
+        <a class="btn btn-light btn-sm" id="decrease"><b>-<i class="fas fa-font"></i></b></a>
+        <a class="btn btn-light btn-sm" id="increase"><b>+<i class="fas fa-font"></i></b></a>
+        <a class="btn btn-light btn-sm" id="list"><b>List</b></a>
+        <a class="btn btn-light btn-sm" id="para"><b>Paragraph</b></a>
+        <a id="textedit" class="btn btn-success btn-sm"><b>Publish</b></a>
+<div id="textEditor" contenteditable>
+  Select some text and click the button to make edit the text...
+</div>
+    </div>
+<div class="col-md-6">
+        {{form.description|as_crispy_field}}
+        </div>
         
-        {% autoescape off %}
-        {{form.description|safe}}
-        {% endautoescape %}
+        </div>
+        <div class="row">
+          <div class="col-md-6">
         {{form.price|as_crispy_field}}
         {{form.quantity|as_crispy_field}}
         {{form.farmer_id|as_crispy_field}}
@@ -32,22 +73,54 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-      {% endif %}
+    
            
       
     </div>
-    <div class="col-md-6">      
-      {% if update %}
-      <form action="update" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{update|crispy}}
-        <button type="submit" class="btn btn-primary">update</button>
-      </form>
-      {% endif %}
-         
-     
-      
-    </div>
+   
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $('#jBold').click(function () {
+      document.execCommand('bold');
+    });
+    $('#italic').click(function () {
+      document.execCommand('italic');
+    });
+    $('#br').click(function () {
+      document.execCommand('insertLineBreak', true);
+    });
+
+    var fontSize = 3;
+
+    $('#decrease').click(function () {
+      if (fontSize > 1)
+        fontSize--;
+      document.execCommand("fontSize", false, fontSize);
+    });
+
+    $('#increase').click(function () {
+      if (fontSize < 7)
+        fontSize++;
+      document.execCommand("fontSize", false, fontSize);
+    });
+    $('#textedit').click(function () {
+      var text = document.getElementById("textEditor").innerHTML;
+      document.getElementById("id_description").innerHTML = text;
+    });
+
+    $('#list').click(function () {
+      document.execCommand("insertHTML", false, "<ul><li>" + document.getSelection() + "</li></ul>");
+
+    });
+    $('#para').click(function () {
+      document.execCommand("insertHTML", false, "<p>" + document.getSelection() + "</p>");
+
+    });
+
+
+  });
+
+</script>
 {% endblock %}

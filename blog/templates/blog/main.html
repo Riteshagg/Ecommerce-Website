@@ -42,6 +42,9 @@
      #menu-icon{
        margin-left: 20px;
      }
+     #userAuth{
+       font-size: 20px;
+     }
         </style>
        
     </head>
@@ -61,7 +64,7 @@
                
                 <li class="nav-item">    
                   <div class="dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Hello, {{request.user}}</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="far fa-user" id="userAuth"></i> Hello, {{request.user}}</a>
                   <ul class="dropdown-menu" role="menu">
                   <li class="dropdown-item" >  <a href="{% url 'product' %}">All Products</a></li>
                   <li class="dropdown-item order-list" >  <a href="#" >Your Order <i class="fas fa-caret-right" id="menu-icon"></i></a>
